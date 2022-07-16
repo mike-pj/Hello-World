@@ -1,0 +1,18 @@
+version: 2.1
+
+workflows:
+  test-env-vars:
+    jobs:
+      - build
+
+jobs:
+  build:
+    docker:
+      - image: cimg/base:2021.11
+      
+    steps:
+      - checkout
+      - run:
+          name: "echo an env var that is part of our project"
+          command: |
+            echo $MIKE_ENV_VAR # this env var must be set within the project
