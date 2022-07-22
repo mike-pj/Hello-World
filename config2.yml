@@ -7,9 +7,9 @@ jobs:
       - image: circleci/node:13.8.0
     steps:
       - checkout
-      - run: echo "hello world" > output.txt
+      - run: echo "hello world" > ~/output.txt
       - persist_to_workspace:
-        # at : ~/
+          at : ~/
           path: output.txt
           
   print_output_file:
@@ -18,8 +18,8 @@ jobs:
     steps:
       - checkout
       - attach_workspace:
-        # at : ~/
-      - run: output.txt
+          at : ~/
+      - run: cat ~/output.txt
           
 workflows:
   my-workflow:
