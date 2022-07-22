@@ -1,0 +1,30 @@
+# Sharing Files between 2 jobs
+version: 2.1
+
+jobs:
+  save_hello_world_output:
+    docker:
+      - image: circleci/node:13.8.0
+    steps:
+      - checkout
+      - run: echo "hello world" > output.txt
+      - persist_to_workspace:
+        # at : ~/
+          path: output.txt
+          
+  print_output_file:
+    docker:
+      - image: circleci/node:13.8.0
+    steps:
+      - checkout
+      - attach_workspace:
+        # at : ~/
+      - run: output.txt
+          
+workflows:
+  my-workflow:
+    jobs:
+      - save_hello_world_output
+      - print_output_file:
+          requires:
+            - save_hello_world_output
